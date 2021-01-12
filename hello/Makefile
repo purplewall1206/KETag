@@ -1,10 +1,12 @@
 obj-m += hello.o
-
+CFLAGS = -Wall -g -std=c99
 # Set the path to the Kernel build utils.
 KBUILD=/lib/modules/$(shell uname -r)/build/
+
+FLAGS=-std=gnu99
  
-default:
-	$(MAKE) -C $(KBUILD) M=$(PWD) modules
+modules:
+	$(MAKE)  -C $(KBUILD) M=$(PWD) modules
 
 clean:
 	$(MAKE) -C $(KBUILD) M=$(PWD) clean
@@ -15,3 +17,8 @@ menuconfig:
 ins:
 	sudo insmod hello.ko
 	sudo rmmod hello
+
+.PHNOY:
+	modules
+
+	# 0xffffffff8260aff0 <init_top_pgt+4080>: 0x0000000000000000      0x000000000260f067
