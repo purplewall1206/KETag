@@ -15,10 +15,13 @@ menuconfig:
 	$(MAKE) -C $(KBUILD) M=$(PWD) menuconfig
 
 ins:
+	sudo dmesg -C
 	sudo insmod hello.ko
 	sudo rmmod hello
+	sudo dmesg
 
 .PHNOY:
 	modules
+	ins
 
 	# 0xffffffff8260aff0 <init_top_pgt+4080>: 0x0000000000000000      0x000000000260f067
