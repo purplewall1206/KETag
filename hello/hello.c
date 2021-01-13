@@ -10,6 +10,7 @@
 #include <linux/mm_types.h>
 #include <linux/pgtable.h>
 #include <linux/slab.h>
+#include <linux/hugetlb.h>
 
 
 #define MODULE_NAME "hello"
@@ -44,9 +45,9 @@ void get_CR3(void)
 {
     int i;
     unsigned long cr30 = pid_to_cr3(current->pid);
-    unsigned long cr31 = __read_cr3();
+    
     // pgd_t *pgd = __va(cr30);
-    pr_info("%d : %lx   %lx    %lx \n", current->pid, cr30, cr31, __va(cr30));
+    pr_info("%d : %lx   %lx    %lx \n", current->pid, cr30, __va(cr30));
     pgd_t* pgds = (pgd_t*) kmalloc(4096, GFP_KERNEL);
     pgds = __va(cr30);
     
@@ -90,8 +91,6 @@ void get_pte(void)
     // if (pmd_none(*pmd) || unlikely(pmd_bad(*pmd)))
     //     pr_err("bad pmd\n");
     pr_info("pmd: %lx, %lx", pmd, *pmd);
-    // if (pmd_huge(*pmd))
-    //     pr_info("pmd huge page\n");
     // else 
     //     pr_info("pmd 4k\n");
 
@@ -100,7 +99,13 @@ void get_pte(void)
 static int __init hello_init(void)
 {
     pr_info("%s init\n", MODULE_NAME);
-    get_CR3();
+    unsigned long CR0 = read_cr0();
+    unsigned long CR3 = __read_cr3();
+    unsigned long CR4 = __read_cr4();
+    pr_info("CR0 : %lx\n", CR0);
+    pr_info("CR3 : %lx\n", CR3);
+    pr_info("CR4 : %lx\n", CR4);
+    // get_CR3();
     // kern_pgtable();
     get_pte();
     
