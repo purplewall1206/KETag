@@ -11,6 +11,7 @@
 #include <linux/pgtable.h>
 #include <linux/slab.h>
 #include <linux/hugetlb.h>
+#include <asm/pgtable.h>
 
 
 #define MODULE_NAME "hello"
@@ -85,12 +86,13 @@ void get_pte(void)
     if (pud_none(*pud) || unlikely(pud_bad(*pud)))
         pr_err("bad pud\n");
     pr_info("pud : %lx  %lx, index: %d\n", pud, *pud, pud_index(addr));
+    // pr_info("pud: p4d_page_vaddr: %lx\n", p4d_page_vaddr(*p4d));
     
     pmd = pmd_offset(pud, addr);
     // here only check low word on 32bit platform
     // if (pmd_none(*pmd) || unlikely(pmd_bad(*pmd)))
     //     pr_err("bad pmd\n");
-    pr_info("pmd: %lx, %lx", pmd, *pmd);
+    pr_info("pmd:  %lx  %lx, index: %d\n", pmd, *pmd, pmd_index(addr));
     // else 
     //     pr_info("pmd 4k\n");
 
@@ -102,7 +104,7 @@ static int __init hello_init(void)
     unsigned long CR0 = read_cr0();
     unsigned long CR3 = __read_cr3();
     unsigned long CR4 = __read_cr4();
-    pr_info("CR0 : %lx\n", CR0);
+    pr_info("CR0 : %lx   %lx   %lx\n", CR0, read_cr3_pa(), __va(read_cr3_pa()));
     pr_info("CR3 : %lx\n", CR3);
     pr_info("CR4 : %lx\n", CR4);
     // get_CR3();

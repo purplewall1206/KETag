@@ -8,6 +8,8 @@ vector<string> PDE{"present", "R/W", "U/S", "PWT", "PCD", "Accessed", "Dirty", "
 // vector<string> PDE4K{"present", "R/W", "U/S", "PWT", "PCD", "Accessed", "", "PS-Page size", "Global", "", "", "", "PAT", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 vector<string> PTE{"present", "R/W", "U/S", "PWT", "PCD", "Accessed", "Dirty", "PAT", "Gloabl", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 vector<unsigned long> mask{1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648};
+#define PAGE_OFFSET		0xffff888000000000
+#define __va(x)			((void *)((unsigned long)(x)+PAGE_OFFSET))
 
 unsigned long convert(string str) {
     unsigned long res = 0;
@@ -36,7 +38,7 @@ void readPDPTE(unsigned long content) {
         cout << "    bit 4 " << PDPTE[4] << endl;
     rsvd = (content & 0b000111100000) >> 5;
     cout << "    bit 5-8 rsvd. " << hex << rsvd << endl;
-    cout << "  Address of page directory : 0x" << hex << (content >> 12) << endl;
+    cout << "  Address of page directory : 0x" << hex << __va((content >> 12) << 12) << endl;
 }
 
 // void readPDE2M(unsigned long content) {
@@ -93,8 +95,8 @@ void readPDE(unsigned long content) {
     if (isHuge) {
         cout << "  Address of 2MB page frame: 0x" << hex << (content >> 21) << endl;
     } else {
-        unsigned long ptaddr = content >> 13;
-        cout << "  Address of page table: 0x" << hex << ptaddr << endl;
+        unsigned long ptaddr = (content >> 12) << 12;
+        cout << "  Address of page table: 0x" << hex << __va(ptaddr) << endl;
     }
     
 }
