@@ -40,31 +40,7 @@ void readPDPTE(unsigned long content) {
     cout << "    bit 5-8 rsvd. " << hex << rsvd << endl;
     cout << "  Address of page directory : 0x" << hex << __va((content >> 12) << 12) << endl;
 }
-
-// void readPDE2M(unsigned long content) {
-//     // 这里需要整体调整一下
-//     cout << "read PDE-4M" << endl;
-//     if (content & 1 == 0) {
-//         cout << "    not present" << endl;
-//         return ;
-//     }
     
-//     for (int i = 0;i < 32;i++) {
-//         if (PDE2M[i] != "" && (content & mask[i])) {
-//             cout << "    bit " << i << " " << PDE2M[i] << endl;
-//         }
-//         if (i == 1 && content & mask[1] == 0) {
-//             // 如果这里是0
-//             cout << "    bit " << i << " " << PDE2M[i] << " - R" << endl; 
-//         }
-//         if (i == 2 && content & mask[2] == 0) {
-//             // 如果这里是0
-//             cout << "    bit " << i << " " << PDE2M[i] << " - U" << endl; 
-//         }
-//     } 
-//     cout << endl;
-//     cout << "  Address of 2MB page frame : 0x" << hex << (content >> 13) << endl;
-// }
 
 void readPDE(unsigned long content) {
     cout << "read PDE" << endl;
@@ -82,18 +58,19 @@ void readPDE(unsigned long content) {
         if (PDE[i] != "" && (content & mask[i])) {
             cout << "    bit " << i << " " << PDE[i] << endl;
         }
-        if (i == 1 && content & mask[1] == 0) {
+        if (i == 1 && (content & mask[1]) == 0) {
             // 如果这里是0
             cout << "    bit " << i << " " << PDE[i] << " - R" << endl; 
         }
-        if (i == 2 && content & mask[2] == 0) {
+        if (i == 2 && (content & mask[2]) == 0) {
             // 如果这里是0
             cout << "    bit " << i << " " << PDE[i] << " - U" << endl; 
         }
     }
     cout << endl;
     if (isHuge) {
-        cout << "  Address of 2MB page frame: 0x" << hex << (content >> 21) << endl;
+        unsigned long ptaddr = ((content >> 21) << 21);
+        cout << "  Address of 2MB page frame: 0x" << hex << ptaddr << "  va: 0x" << __va(ptaddr) << endl;
     } else {
         unsigned long ptaddr = (content >> 12) << 12;
         cout << "  Address of page table: 0x" << hex << __va(ptaddr) << endl;
@@ -111,11 +88,11 @@ void readPTE(unsigned long content) {
         if (PTE[i] != "" && (content & mask[i])) {
             cout << "    bit " << i << " " << PTE[i] << endl;
         }
-        if (i == 1 && content & mask[1] == 0) {
+        if (i == 1 && (content & mask[1]) == 0) {
             // 如果这里是0
             cout << "    bit " << i << " " << PTE[i] << " - R" << endl; 
         }
-        if (i == 2 && content & mask[2] == 0) {
+        if (i == 2 && (content & mask[2]) == 0) {
             // 如果这里是0
             cout << "    bit " << i << " " << PTE[i] << " - U" << endl; 
         }

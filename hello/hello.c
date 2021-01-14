@@ -66,12 +66,12 @@ void get_pte(void)
     p4d_t *p4d;
     pud_t *pud;
     pmd_t *pmd;
-    pte_t *ptep;
+    pte_t *pte;
     mm = task->mm;
     if (mm == NULL) 
         mm = task->active_mm;
     
-    unsigned long addr = 0xffffffff81000000;
+    unsigned long addr = 0xffffffff81000010;
     pgd = pgd_offset(mm, addr);
     if (pgd_none(*pgd) || unlikely(pgd_bad(*pgd)))
         pr_err("bad pgd\n");
@@ -90,11 +90,36 @@ void get_pte(void)
     
     pmd = pmd_offset(pud, addr);
     // here only check low word on 32bit platform
-    // if (pmd_none(*pmd) || unlikely(pmd_bad(*pmd)))
-    //     pr_err("bad pmd\n");
+    if (pmd_none(*pmd))
+        pr_err("bad pmd\n");
     pr_info("pmd:  %lx  %lx, index: %d\n", pmd, *pmd, pmd_index(addr));
-    // else 
-    //     pr_info("pmd 4k\n");
+    if (pmd_large(*pmd)) {
+        pr_info("pmd: 2MB page\n");
+        struct page *p = pmd_page(*pmd);
+        unsigned long pageaddr = page_address(p);
+        pr_info("page address : %lx\n", pageaddr);
+        int i;
+        char *list = (char*)addr;
+
+        // in page offset 21bits
+        unsigned long offset = addr & ((1 << 21)-1);
+
+        char* list1 = (char*)(pageaddr+offset);
+        for (i = 0;i < 100;i++) {
+            printk("%lx->%lx,   %lx->%lx  %d\n", &list[i], list[i], &list1[i], list1[i], (list[i] == list1[i]));
+        }
+        printk("\n");
+    } else {
+        pte = pte_offset_kernel(pmd, addr);
+        struct page* p = pte_page(*pte);
+        unsigned long pageaddr = page_address(p);
+
+        // in page offset 12bits
+        unsigned long offset = addr & ((1 << 12) -1);
+        pr_info("page address: %lx, %lx\n", pageaddr, pageaddr + offset);
+    }
+
+    
 
 }
 
