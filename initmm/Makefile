@@ -15,7 +15,7 @@ menuconfig:
 	$(MAKE) -C $(KBUILD) M=$(PWD) menuconfig
 
 ins:
-	# sudo dmesg -C
+	sudo dmesg -C
 	sudo insmod initmm.ko
 	sudo rmmod initmm
 	sudo dmesg
