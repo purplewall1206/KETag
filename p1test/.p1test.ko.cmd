@@ -1,0 +1,1 @@
+cmd_/home/ppw/KETag/p1test/p1test.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 --build-id  -T ./scripts/module-common.lds -o /home/ppw/KETag/p1test/p1test.ko /home/ppw/KETag/p1test/p1test.o /home/ppw/KETag/p1test/p1test.mod.o;  true
