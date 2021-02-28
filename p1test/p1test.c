@@ -52,7 +52,7 @@ static int __init hello_init(void)
     pgds = cr3;
     pr_info("pgds: %lx\n", pgds);
     for (i = 0;i < 512;i++) {
-        pr_info("pgd[%d]: %lx  %lx\n", i, &pgds[i], pgds[i]);
+        pr_info("pgd[%d]: %lx  %lx  %lx\n", i, &pgds[i], pgds[i], (0xffff000000000000 + (i << 39)));
     }
 
     return 0;
