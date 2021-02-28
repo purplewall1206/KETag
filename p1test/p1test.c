@@ -12,6 +12,7 @@
 #include <linux/slab.h>
 #include <linux/hugetlb.h>
 #include <asm/pgtable.h>
+#include <asm/pgtable_64.h>
 
 
 #define MODULE_NAME "p1test"
@@ -36,25 +37,35 @@ unsigned long getvCR3(int pid)
     return cr3;
 }
 
+void traversePGD(void)
+{
+    int i;
+    pgd_t* pgds;
+
+    pgds = getvCR3(current->pid);
+    pr_info("pgds: %lx\n", pgds);
+    for (i = 0;i < 512;i++) {
+        unsigned long rangestart = 0xffff000000000000 + ((unsigned long)(i) << 39);
+        unsigned long rangeend = rangestart + ((unsigned long)1 << 39);
+        pr_info("pgd[%d]: %lx  %lx  [%lx, %lx]\n", i, &pgds[i], pgds[i], rangestart, rangeend);
+    }
+}
+
 
 static int __init hello_init(void)
 {
-    int i;
-    unsigned long cr3;
-    
     pgd_t* pgds;
-    pr_info("%s init\n", MODULE_NAME);  
-    
-    cr3 = getvCR3(current->pid);
-    pr_info("cr3 : %lx\n", cr3);
-    pgds = (pgd_t*) kmalloc(4096, GFP_KERNEL);
-    pr_info("kmalloc pgds:%lx\n", pgds);
-    pgds = cr3;
-    pr_info("pgds: %lx\n", pgds);
-    for (i = 0;i < 512;i++) {
-        pr_info("pgd[%d]: %lx  %lx  %lx\n", i, &pgds[i], pgds[i], (0xffff000000000000 + (i << 39)));
-    }
+    pgd_t* INIT_TOP_PGD;
+    int i;
+    INIT_TOP_PGD = 0Xffffffff8260a000;
+    pgds = INIT_TOP_PGD;
 
+    pr_info("%s init\n", MODULE_NAME);  
+    pr_info("init_top_pgd: %lx\n", pgds);
+    for (i = 0;i < 512;i++) {
+        pr_info("pgd[%d]: %lx  %lx\n", i, &pgds[i], pgds[i]);
+    }
+    
     return 0;
 }
 
