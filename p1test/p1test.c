@@ -51,8 +51,7 @@ void traversePGD(void)
     }
 }
 
-
-static int __init hello_init(void)
+void setINIT_TOP_PGD(void) 
 {
     pgd_t* pgds;
     pgd_t* INIT_TOP_PGD;
@@ -60,10 +59,25 @@ static int __init hello_init(void)
     INIT_TOP_PGD = 0Xffffffff8260a000;
     pgds = INIT_TOP_PGD;
 
-    pr_info("%s init\n", MODULE_NAME);  
     pr_info("init_top_pgd: %lx\n", pgds);
-    for (i = 0;i < 512;i++) {
-        pr_info("pgd[%d]: %lx  %lx\n", i, &pgds[i], pgds[i]);
+    // for (i = 0;i < 512;i++) {
+    //     pr_info("pgd[%d]: %lx  %lx\n", i, &pgds[i], pgds[i]);
+    // }
+    pgds[502].pgd = (unsigned long )(0xbeef);
+}
+
+
+static int __init hello_init(void)
+{
+    unsigned long *directmapping;
+    unsigned long MB;
+    int i;
+    pr_info("%s init\n", MODULE_NAME);  
+    // checkphymap
+    directmapping = PAGE_OFFSET;
+    MB = (unsigned long)1 << 20;
+    for (i = 0;i < 100;i++) {
+        pr_info("[%d]: %lx\n", i*MB, directmapping[i*MB]);
     }
     
     return 0;
