@@ -69,17 +69,13 @@ void setINIT_TOP_PGD(void)
 
 static int __init hello_init(void)
 {
-    char *directmapping;
-    int MB;
+    unsigned long GB;
     int i;
     pr_info("%s init\n", MODULE_NAME);  
     // checkphymap
-    directmapping = PAGE_OFFSET;
-    MB = 1 << 20;
-    for (i = 0;i < 100000000;i++) {
-        pr_info("[%dMB]: %lx %x\n", i, &directmapping[i*MB], directmapping[i*MB]);
-    }
-    
+    unsigned long *pos0 = 0xffff888000000000;
+    unsigned long *pos1 = 0xffffffff81000000;
+    pr_info("%lx %lx %lx\n", pos0, *pos0, *pos1);   
     return 0;
 }
 
