@@ -76,8 +76,8 @@ static int __init hello_init(void)
     // checkphymap
     directmapping = PAGE_OFFSET;
     MB = (unsigned long)1 << 20;
-    for (i = 0;i < 100;i++) {
-        pr_info("[%d]: %lx\n", i*MB, directmapping[i*MB]);
+    for (i = 0;i < 2049;i++) {
+        pr_info("[%dMB]: %lx\n", i, directmapping[i*MB]);
     }
     
     return 0;
