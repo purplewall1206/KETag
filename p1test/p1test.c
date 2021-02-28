@@ -20,14 +20,17 @@ MODULE_LICENSE("GPL v2");
 
 static int __init hello_init(void)
 {
-    pr_info("%s init\n", MODULE_NAME);    
-    // kasan addr
-    char* addr = 0xffffec0000000000;
-    int i = 0;
-    for (i = 0;i < 10;i++) {
-        pr_info("%c\n", addr[i]);
+    int i;
+    unsigned long cr3;
+    pgd_t* pgds;
+    pr_info("%s init\n", MODULE_NAME);  
+    cr3 = __read_cr3();
+    pgds = (pgd_t*) kmalloc(4096, GFP_KERNEL);
+    pgds = cr3;
+    for (i = 0;i < 512;i++) {
+        pr_info("pgd[%d]: %lx  %lx\n", i, &pgds[i], pgds[i]);
     }
-    pr_info("%s cout\n", MODULE_NAME);
+
     return 0;
 }
 
