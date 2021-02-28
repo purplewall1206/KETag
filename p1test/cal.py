@@ -22,3 +22,11 @@ _stext_ketag = int((_stext-start)/8+kasanstart)
 print("%#x"%_stext_ketag)
 print(_stext_ketag-kasanstart)
 print(_stext_ketag-kasanend)
+
+
+phymapend = 0xffffc87fffffffff
+print(hex(phymapend+1))
+
+ketagbase = phymapend+1-TB*16
+print(hex(ketagbase))
+#0xffffb88000000000

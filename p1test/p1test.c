@@ -73,9 +73,10 @@ static int __init hello_init(void)
     int i;
     pr_info("%s init\n", MODULE_NAME);  
     // checkphymap
-    unsigned long *pos0 = 0xffff888000000000;
-    unsigned long *pos1 = 0xffffffff81000000;
-    pr_info("%lx %lx %lx\n", pos0, *pos0, *pos1);   
+    unsigned long MB = 0x100000;
+    unsigned long *pos0 = 0xffffb88000000000;
+    // unsigned long *pos1 = 0xffffffff81000000;
+    pr_info("%lx %lx \n", pos0, *pos0);   
     return 0;
 }
 
