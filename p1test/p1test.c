@@ -18,15 +18,39 @@
 MODULE_AUTHOR("ppw");
 MODULE_LICENSE("GPL v2");
 
+unsigned long getvCR3(int pid) 
+{
+    struct task_struct *task;
+    struct mm_struct *mm;
+    unsigned long cr3;
+
+    task = pid_task(find_vpid(current->pid), PIDTYPE_PID);
+    if (task == NULL) 
+        return 0;
+    mm = task->mm;
+    if (mm == NULL)
+        mm = task->active_mm;
+    if (mm == NULL)
+        return 0;
+    cr3 = mm->pgd;
+    return cr3;
+}
+
+
 static int __init hello_init(void)
 {
     int i;
     unsigned long cr3;
+    
     pgd_t* pgds;
     pr_info("%s init\n", MODULE_NAME);  
-    cr3 = __read_cr3();
+    
+    cr3 = getvCR3(current->pid);
+    pr_info("cr3 : %lx\n", cr3);
     pgds = (pgd_t*) kmalloc(4096, GFP_KERNEL);
+    pr_info("kmalloc pgds:%lx\n", pgds);
     pgds = cr3;
+    pr_info("pgds: %lx\n", pgds);
     for (i = 0;i < 512;i++) {
         pr_info("pgd[%d]: %lx  %lx\n", i, &pgds[i], pgds[i]);
     }
