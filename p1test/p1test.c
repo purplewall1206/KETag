@@ -55,7 +55,7 @@ void setINIT_TOP_PGD(void)
 {
     pgd_t* pgds;
     pgd_t* INIT_TOP_PGD;
-    int i;
+    // int i;
     INIT_TOP_PGD = 0Xffffffff8260a000;
     pgds = INIT_TOP_PGD;
 
@@ -69,15 +69,15 @@ void setINIT_TOP_PGD(void)
 
 static int __init hello_init(void)
 {
-    unsigned long *directmapping;
-    unsigned long MB;
+    char *directmapping;
+    int MB;
     int i;
     pr_info("%s init\n", MODULE_NAME);  
     // checkphymap
     directmapping = PAGE_OFFSET;
-    MB = (unsigned long)1 << 20;
-    for (i = 0;i < 2049;i++) {
-        pr_info("[%dMB]: %lx\n", i, directmapping[i*MB]);
+    MB = 1 << 20;
+    for (i = 0;i < 100000000;i++) {
+        pr_info("[%dMB]: %lx %x\n", i, &directmapping[i*MB], directmapping[i*MB]);
     }
     
     return 0;
