@@ -69,35 +69,51 @@ void setINIT_TOP_PGD(void)
 
 static int __init hello_init(void)
 {
-    unsigned long GB;
     int i;
-    struct task_struct *task;
-    struct mm_struct *mm;
-    unsigned long cr3;
+    // struct task_struct *task;
+    // struct mm_struct *mm;
+    // unsigned long cr3;
     pgd_t *pgd;
     p4d_t *p4d;
     pud_t *pud;
     pmd_t *pmd;
     pte_t *pte;
+    pgd_t* INIT_TOP_PGD;
+    struct mm_struct* INIT_MM;
+    // int i;
+    INIT_TOP_PGD = 0Xffffffff8260a000;
+    INIT_MM = 0xffffffff826f3a60;
 
-    task = pid_task(find_vpid(current->pid), PIDTYPE_PID);
-    if (task == NULL) 
-        return 0;
-    mm = task->mm;
-    if (mm == NULL)
-        mm = task->active_mm;
-    if (mm == NULL)
-        return 0;
-    cr3 = mm->pgd;
-    pr_info("%s init\n", MODULE_NAME);  
+    // task = pid_task(find_vpid(current->pid), PIDTYPE_PID);
+    // if (task == NULL) 
+    //     return 0;
+    // mm = task->mm;
+    // if (mm == NULL)
+    //     mm = task->active_mm;
+    // if (mm == NULL)
+    //     return 0;
+    // cr3 = mm->pgd;
+    pr_info("%s init\n", MODULE_NAME);
+    // pr_info("cr3: %lx\n", cr3);  
     // checkphymap
-    unsigned long MB = 0x100000;
-    unsigned long *addr = 0xffffb88000000000;
+    unsigned long addr = 0xffffb88000000000;
     // unsigned long *pos1 = 0xffffffff81000000;
-    pgd = pgd_offset(mm, addr);
+    pgd = pgd_offset(INIT_MM, addr);
+    // pgd = pgd_offset_pgd(INIT_TOP_PGD, addr);
     if (pgd_none(*pgd) || unlikely(pgd_bad(*pgd)))
         pr_err("bad pgd\n");
     pr_info("pgd : %lx  %lx, index: %d\n", pgd, pgd->pgd, pgd_index(addr));
+
+    p4d = p4d_offset(pgd, addr);
+    pr_info("p4d : %lx  %lx, index: %d\n", p4d, *p4d, p4d_index(addr));
+    if (unlikely(p4d_bad(*p4d))) 
+        pr_err("bad p4d\n");
+    if (p4d_none(*p4d)) {
+        pr_info("alloc p4d\n");
+        p4d = p4d_alloc(INIT_MM, pgd, addr);
+    }
+
+    pr_info("p4d : %lx  %lx, index: %d\n", p4d, *p4d, p4d_index(addr));
     return 0;
 }
 
