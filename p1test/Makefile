@@ -1,4 +1,4 @@
-obj-m += p1test.o
+obj-y += p1test.o
 CFLAGS = -Wall -g -std=c99
 # Set the path to the Kernel build utils.
 KBUILD=/lib/modules/$(shell uname -r)/build/
