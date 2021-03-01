@@ -1045,6 +1045,8 @@ deps_/home/ppw/KETag/p1test/p1test.o := \
   arch/x86/include/asm/hugetlb.h \
   include/asm-generic/hugetlb.h \
     $(wildcard include/config/arch/has/gigantic/page.h) \
+  arch/x86/include/asm/pgalloc.h \
+  include/asm-generic/pgalloc.h \
 
 /home/ppw/KETag/p1test/p1test.o: $(deps_/home/ppw/KETag/p1test/p1test.o)
 
