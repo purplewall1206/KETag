@@ -71,12 +71,33 @@ static int __init hello_init(void)
 {
     unsigned long GB;
     int i;
+    struct task_struct *task;
+    struct mm_struct *mm;
+    unsigned long cr3;
+    pgd_t *pgd;
+    p4d_t *p4d;
+    pud_t *pud;
+    pmd_t *pmd;
+    pte_t *pte;
+
+    task = pid_task(find_vpid(current->pid), PIDTYPE_PID);
+    if (task == NULL) 
+        return 0;
+    mm = task->mm;
+    if (mm == NULL)
+        mm = task->active_mm;
+    if (mm == NULL)
+        return 0;
+    cr3 = mm->pgd;
     pr_info("%s init\n", MODULE_NAME);  
     // checkphymap
     unsigned long MB = 0x100000;
-    unsigned long *pos0 = 0xffffb88000000000;
+    unsigned long *addr = 0xffffb88000000000;
     // unsigned long *pos1 = 0xffffffff81000000;
-    pr_info("%lx %lx \n", pos0, *pos0);   
+    pgd = pgd_offset(mm, addr);
+    if (pgd_none(*pgd) || unlikely(pgd_bad(*pgd)))
+        pr_err("bad pgd\n");
+    pr_info("pgd : %lx  %lx, index: %d\n", pgd, pgd->pgd, pgd_index(addr));
     return 0;
 }
 
