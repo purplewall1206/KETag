@@ -110,8 +110,8 @@ static int __init hello_init(void)
     unsigned long addr;
     // int i;
     INIT_TOP_PGD = (pgd_t*)0Xffffffff8260a000;
-    INIT_MM = (struct mm_struct*)0xffffffff826f3a60;
-    // INIT_MM =  &init_mm;
+    // INIT_MM = (struct mm_struct*)0xffffffff826f3a60;
+    INIT_MM =  &init_mm;
 
     // task = pid_task(find_vpid(current->pid), PIDTYPE_PID);
     // if (task == NULL) 
