@@ -1045,6 +1045,7 @@ deps_/home/ppw/KETag/crashunload/crashunload.o := \
   arch/x86/include/asm/hugetlb.h \
   include/asm-generic/hugetlb.h \
     $(wildcard include/config/arch/has/gigantic/page.h) \
+  include/linux/ketag.h \
 
 /home/ppw/KETag/crashunload/crashunload.o: $(deps_/home/ppw/KETag/crashunload/crashunload.o)
 

@@ -121,9 +121,15 @@ void checkstruct(unsigned long addr)
 static int __init hello_init(void)
 {
     int i;   
-    unsigned long addr = 0xffffffffffffffff;
-    unsigned long ketagbase = 0xffffb88000000000;
+    unsigned long addr = 0xfffffffffffffff0;
+    unsigned long ketagbase = 0xffffb88000000001;
     unsigned long *value = (unsigned long*) ketagbase;
+    unsigned long ptefault =  0xffffb88000001000;
+    unsigned long pmdfault =  0xffffb88000200000;
+    unsigned long pudfault =  0xffffb88040000000;
+    unsigned long pgdfault =  0xffffb90000000000;
+    unsigned long ketagtag =  0xffffbf9000000000;
+    unsigned long ketagtage=  0xffffc19000000000;
     pr_info("%s init\n", MODULE_NAME); 
     // *value = 0xdeadbeefabcdacdc;
     // void (*target)(unsigned long );
@@ -134,9 +140,9 @@ static int __init hello_init(void)
     // for (i = 0;i < 4096/8+1;i++) {
     //     pr_info("%lx  :  %lx\n", (unsigned long)&value[i], (unsigned long)value[i]);
     // }
-    alloc_ketag_startpage(ketagbase);
-    checkstruct(ketagbase);
-    access(ketagbase);
+    // alloc_ketag_startpage(ketagbase);
+    // checkstruct(ketagbase);
+    access(ketagtag);
     return 0;
 }
 

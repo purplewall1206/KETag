@@ -18,6 +18,7 @@ ins:
 	# sudo dmesg -C
 	sudo insmod crashunload.ko
 	sudo rmmod crashunload
+	sudo rmmod p2test
 	# sudo dmesg
 
 .PHNOY:

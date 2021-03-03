@@ -26,23 +26,26 @@ char crashname[] = "p2test";
 static int __init crashunload_init(void)
 {
     struct list_head *modules;
-    struct module *mod;
+    struct module *mod = 0;
     struct module *list_mod;
-
-    char *sym_name;
-    unsigned long sym_addr;
+    unsigned long addr = 0xffffb88000000001;
+    // char *sym_name;
+    // unsigned long sym_addr;
     pr_info("%s init\n", MODULE_NAME);    
-    
+    // alloc_ketag_startpage(addr);
     // *sym_name = "modules";
     // sym_addr = kallsyms_lookup_name(sym_name);
     modules = (struct list_head*) get_sym_modules();
-    pr_info("modules address : %016lx\n", sym_addr);
+    pr_info("modules address : %016lx\n", (unsigned long) modules);
 
     list_for_each_entry(list_mod, modules, list) {
         if (strcmp(list_mod->name, crashname) == 0)
             mod = list_mod;
     }
-
+    if (mod == 0) {
+        pr_debug("p2test not found\n");
+        return -1;
+    }
     mod->state = MODULE_STATE_LIVE;
 
     uint64_t refcnt = atomic_read(&(mod->refcnt)); 
