@@ -1,0 +1,49 @@
+[ 1654.295785] alloc pud done
+[ 1654.295843] general protection fault, probably for non-canonical address 0x87d3f000f000: 0000 [#1] SMP NOPTI
+[ 1654.296536] CPU: 0 PID: 4326 Comm: insmod Tainted: G           OE     5.8.0+ #4
+[ 1654.296946] Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 07/29/2019
+[ 1654.297746] RIP: 0010:checkstruct.cold+0x1ec/0x3fb [p2test]
+[ 1654.298465] Code: 0f 1f 40 00 40 80 e7 80 48 8b 15 7e be b2 c1 0f 84 9a 01 00 00 48 81 e2 00 00 00 c0 48 03 35 8a 4e b1 c1 48 21 c2 4c 8d 2c 16 <49> f7 45 00 9f ff ff ff 75 0c 48 c7 c7 50 f1 92 c0 e8 a0 94 7e c0
+[ 1654.300222] RSP: 0018:ffffc90002ed3c48 EFLAGS: 00010206
+[ 1654.300686] RAX: f000ff53f000ff53 RBX: ffffb88000000000 RCX: 0000000000000000
+[ 1654.301187] RDX: 0000ff53f000f000 RSI: ffff888000000000 RDI: f000ff53f000ff00
+[ 1654.301596] RBP: ffffc90002ed3c68 R08: 00000000000006b0 R09: 0000000000000004
+[ 1654.302205] R10: 0000000000000000 R11: 0000000000000001 R12: ffff888000000000
+[ 1654.302660] R13: 000087d3f000f000 R14: 0000000000000000 R15: 0000000000000000
+[ 1654.303251] FS:  00007fb67a24b540(0000) GS:ffff888139e00000(0000) knlGS:0000000000000000
+[ 1654.303937] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 1654.304745] CR2: 00005564e302a7b0 CR3: 000000004e240002 CR4: 00000000003606f0
+[ 1654.305644] Call Trace:
+[ 1654.306202]  ? 0xffffffffc0933000
+[ 1654.306725]  hello_init+0x33/0x1000 [p2test]
+[ 1654.307237]  do_one_initcall+0x4a/0x200
+[ 1654.307900]  ? _cond_resched+0x1a/0x50
+[ 1654.308314]  ? kmem_cache_alloc_trace+0x168/0x240
+[ 1654.308726]  do_init_module+0x62/0x270
+[ 1654.309677]  load_module+0x2466/0x2720
+[ 1654.310162]  ? security_kernel_post_read_file+0x5c/0x70
+[ 1654.310583]  __do_sys_finit_module+0xbe/0x120
+[ 1654.311045]  __x64_sys_finit_module+0x1a/0x20
+[ 1654.311453]  do_syscall_64+0x52/0xc0
+[ 1654.311904]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+[ 1654.312307] RIP: 0033:0x7fb67a38767d
+[ 1654.312718] Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d bb f7 0c 00 f7 d8 64 89 01 48
+[ 1654.314141] RSP: 002b:00007ffcafce06e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+[ 1654.314593] RAX: ffffffffffffffda RBX: 00005564e376a780 RCX: 00007fb67a38767d
+[ 1654.315081] RDX: 0000000000000000 RSI: 00005564e3035358 RDI: 0000000000000003
+[ 1654.315504] RBP: 0000000000000000 R08: 0000000000000000 R09: 00007fb67a45b580
+[ 1654.315971] R10: 0000000000000003 R11: 0000000000000246 R12: 00005564e3035358
+[ 1654.316420] R13: 0000000000000000 R14: 00005564e376a750 R15: 0000000000000000
+[ 1654.316870] Modules linked in: p2test(OE+) vsock_loopback vmw_vsock_virtio_transport_common vmw_vsock_vmci_transport vsock dm_multipath scsi_dh_rdac scsi_dh_emc scsi_dh_alua intel_rapl_msr btusb intel_rapl_common snd_ens1371 btrtl snd_ac97_codec btbcm kvm_intel btintel ac97_bus snd_pcm bluetooth snd_timer kvm snd_rawmidi snd input_leds joydev ecdh_generic rapl soundcore serio_raw ecc gameport vmw_balloon vmw_vmci mac_hid sch_fq_codel ip_tables x_tables autofs4 btrfs blake2b_generic zstd_compress raid10 raid456 async_raid6_recov async_memcpy async_pq async_xor async_tx xor raid6_pq libcrc32c raid1 raid0 multipath linear vmwgfx drm_kms_helper syscopyarea sysfillrect sysimgblt fb_sys_fops cec rc_core ttm drm hid_generic ahci e1000 libahci usbhid hid crct10dif_pclmul crc32_pclmul ghash_clmulni_intel aesni_intel psmouse glue_helper crypto_simd cryptd mptspi scsi_transport_spi mptscsih mptbase pata_acpi i2c_piix4
+[ 1654.321709] ---[ end trace 34cb510ab22d0590 ]---
+[ 1654.322220] RIP: 0010:checkstruct.cold+0x1ec/0x3fb [p2test]
+[ 1654.322654] Code: 0f 1f 40 00 40 80 e7 80 48 8b 15 7e be b2 c1 0f 84 9a 01 00 00 48 81 e2 00 00 00 c0 48 03 35 8a 4e b1 c1 48 21 c2 4c 8d 2c 16 <49> f7 45 00 9f ff ff ff 75 0c 48 c7 c7 50 f1 92 c0 e8 a0 94 7e c0
+[ 1654.324158] RSP: 0018:ffffc90002ed3c48 EFLAGS: 00010206
+[ 1654.324617] RAX: f000ff53f000ff53 RBX: ffffb88000000000 RCX: 0000000000000000
+[ 1654.325133] RDX: 0000ff53f000f000 RSI: ffff888000000000 RDI: f000ff53f000ff00
+[ 1654.325677] RBP: ffffc90002ed3c68 R08: 00000000000006b0 R09: 0000000000000004
+[ 1654.326210] R10: 0000000000000000 R11: 0000000000000001 R12: ffff888000000000
+[ 1654.326679] R13: 000087d3f000f000 R14: 0000000000000000 R15: 0000000000000000
+[ 1654.327223] FS:  00007fb67a24b540(0000) GS:ffff888139e00000(0000) knlGS:0000000000000000
+[ 1654.327700] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 1654.328984] CR2: 00005564e302a7b0 CR3: 000000004e240002 CR4: 00000000003606f0
