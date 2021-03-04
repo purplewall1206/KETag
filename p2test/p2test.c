@@ -12,9 +12,11 @@
 #include <linux/slab.h>
 #include <linux/hugetlb.h>
 #include <asm/pgtable.h>
+#include <linux/string.h>
 
 #include <linux/ketag.h>
 
+// #define TB                  (unsigned long)(1) << 40
 
 #define MODULE_NAME "p2test"
 MODULE_AUTHOR("ppw");
@@ -118,12 +120,39 @@ void checkstruct(unsigned long addr)
     
 }
 
+void checkptestruct(unsigned long addr)
+{
+    struct task_struct *task = pid_task(find_vpid(current->pid), PIDTYPE_PID);
+    struct mm_struct *mm;
+    pgd_t *pgd;
+    p4d_t *p4d;
+    pud_t *pud;
+    pmd_t *pmd;
+    pte_t *pte;
+    mm = task->mm;
+    if (mm == NULL) 
+        mm = task->active_mm;
+    pgd = pgd_offset(mm, addr);
+
+    p4d = p4d_offset(pgd, addr);
+    pud = pud_offset(p4d, addr);
+    
+    pmd = pmd_offset(pud, addr);
+    // here only check low word on 32bit platform
+
+    pte = pte_offset_kernel(pmd, addr);
+    if (pte_none(*pte))
+        pr_err("bad pte\n");
+    pr_info("pte:  %lx  %lx, index: %d\n", pte, *pte, pte_index(addr));
+}
+
 static int __init hello_init(void)
 {
     int i;   
     unsigned long addr = 0xfffffffffffffff0;
-    unsigned long ketagbase = 0xffffb88000000001;
-    unsigned long *value = (unsigned long*) ketagbase;
+    // unsigned long ketagbase = 0xffffb88000000000;
+    unsigned long testaddr = 0xffffb88000000000 + 100*MB;
+    unsigned long *value = (unsigned long*) testaddr;
     unsigned long ptefault =  0xffffb88000001000;
     unsigned long pmdfault =  0xffffb88000200000;
     unsigned long pudfault =  0xffffb88040000000;
@@ -131,18 +160,27 @@ static int __init hello_init(void)
     unsigned long ketagtag =  0xffffbf9000000000;
     unsigned long ketagtage=  0xffffc19000000000;
     pr_info("%s init\n", MODULE_NAME); 
-    // *value = 0xdeadbeefabcdacdc;
+
     // void (*target)(unsigned long );
     // target = (void *)0xffffffff812a8b09;
     // (*target)(addr);
     // traversePGD();
+    // for (i = 0;i < 32;i++)
+    //     pr_info("%lx\n", ketag_base + TB*i);
     
     // for (i = 0;i < 4096/8+1;i++) {
     //     pr_info("%lx  :  %lx\n", (unsigned long)&value[i], (unsigned long)value[i]);
     // }
     // alloc_ketag_startpage(ketagbase);
     // checkstruct(ketagbase);
-    access(ketagtag);
+    // ketag_alloc_addr_one(testaddr);
+    ketag_alloc_addr(testaddr, 4*GB);
+    *value = 0x1234567890abcdef;
+    checkptestruct(testaddr);
+    access(testaddr);
+    access(testaddr+4);
+    access(testaddr+GB*2);
+    access(testaddr+KB*9+100);
     return 0;
 }
 
