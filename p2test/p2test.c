@@ -119,7 +119,10 @@ void checkstruct(unsigned long addr)
     }
     
 }
-
+// unsigned long get_pte_pa(pte_t *pte) 
+// {
+//     return ((pte->pte)&(0xfffffffff000));
+// }
 void checkptestruct(unsigned long addr)
 {
     struct task_struct *task = pid_task(find_vpid(current->pid), PIDTYPE_PID);
@@ -144,14 +147,17 @@ void checkptestruct(unsigned long addr)
     if (pte_none(*pte))
         pr_err("bad pte\n");
     pr_info("pte:  %lx  %lx, index: %d\n", pte, *pte, pte_index(addr));
+    // pr_info("pte to phys:%lx\n", get_pte_pa(pte));
 }
+
+
 
 static int __init hello_init(void)
 {
     int i;   
     unsigned long addr = 0xfffffffffffffff0;
     // unsigned long ketagbase = 0xffffb88000000000;
-    unsigned long testaddr = 0xffffb88000000000 + 100*MB;
+    unsigned long testaddr = 0xffffb88000000000 + 100*MB + 10 * KB + 100;
     unsigned long *value = (unsigned long*) testaddr;
     unsigned long ptefault =  0xffffb88000001000;
     unsigned long pmdfault =  0xffffb88000200000;
@@ -174,13 +180,23 @@ static int __init hello_init(void)
     // alloc_ketag_startpage(ketagbase);
     // checkstruct(ketagbase);
     // ketag_alloc_addr_one(testaddr);
-    ketag_alloc_addr(testaddr, 4*GB);
-    *value = 0x1234567890abcdef;
+    // ketag_alloc_addr(testaddr, MB);
+    // *value = 0x1234567890abcdef;
+    ketag_free_addr_one(testaddr);
     checkptestruct(testaddr);
-    access(testaddr);
-    access(testaddr+4);
-    access(testaddr+GB*2);
+    
+    // checkstruct(testaddr);
+    // int res = ketag_free_addr_one(testaddr);
+    // pr_info("res %d\n", res);
     access(testaddr+KB*9+100);
+    // ketag_free_addr_one(testaddr);
+
+    // access(testaddr);
+    // access(testaddr+4);
+    // unsigned long pa_to_va = 0xffff888042987000;
+    // access(pa_to_va);
+    // access(testaddr+GB*2);
+    
     return 0;
 }
 

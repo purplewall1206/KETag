@@ -98,8 +98,8 @@ void readPTE(unsigned long content) {
         }
     }
     cout << endl;
-    unsigned long pageframe = (content >> 12);
-    cout << "  Address of 4KB page frame: 0x" << hex << pageframe << endl;
+    unsigned long addr = (content >> 12) << 12;
+    cout << "  Address of 4KB page frame: " << hex << __va(addr) << endl;
 }
 
 int main(int argc, char** argv) {

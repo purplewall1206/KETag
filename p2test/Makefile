@@ -16,7 +16,7 @@ menuconfig:
 	$(MAKE) -C $(KBUILD) M=$(PWD) menuconfig
 
 ins:
-	# sudo dmesg -C
+	sudo dmesg -C
 	sudo insmod p2test.ko
 	sudo rmmod p2test
 	sudo dmesg
