@@ -180,7 +180,8 @@ static int __init hello_init(void)
     // alloc_ketag_startpage(ketagbase);
     // checkstruct(ketagbase);
     // ketag_alloc_addr_one(testaddr);
-    ketag_alloc_addr(testaddr, MB);
+    // ketag_alloc_addr(testaddr, MB);
+    ketag_free_addr(testaddr, MB);
     // *value = 0x1234567890abcdef;
     // ketag_free_addr_one(testaddr);
     checkptestruct(testaddr);

@@ -1,7 +1,9 @@
-#include <linux/gfp.h>
-#include <linux/slab.h>
+#include <linux/slub_def.h>
 
-tracepoint:kmem:kmalloc 
+kretprobe:kmalloc_slab
 {
-
+    $kc = (struct kmem_cache *) retval;
+    printf("%lu\n", $kc->size);
 }
+
+

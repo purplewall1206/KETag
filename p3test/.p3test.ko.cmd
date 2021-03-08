@@ -1,0 +1,1 @@
+cmd_/home/ppw/KETag/p3test/p3test.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 --build-id  -T ./scripts/module-common.lds -o /home/ppw/KETag/p3test/p3test.ko /home/ppw/KETag/p3test/p3test.o /home/ppw/KETag/p3test/p3test.mod.o;  true

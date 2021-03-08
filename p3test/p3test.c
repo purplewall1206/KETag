@@ -168,12 +168,17 @@ static int __init hello_init(void)
     // unsigned long ketagtage=  0xffffc19000000000;
     pr_info("%s init\n", MODULE_NAME); 
 
-    void* res = ketag_vmalloc(64*KB, (char)(0b10010110));
+    void* res = ketag_vmalloc(64*KB, (char)(0b00000000));
+    // void* res = (void*) 0xffffc90000821000;
+    
     pr_info("ketag_vamlloc : %016lx\n", (unsigned long)res);
     access(ketag_addr_cal((unsigned long ) res));
     access(ketag_addr_cal((unsigned long ) (res+KB)));
     access(ketag_addr_cal((unsigned long ) (res+6*KB)));
-
+    ketag_vfree(res);
+    access(ketag_addr_cal((unsigned long ) res));
+    access(ketag_addr_cal((unsigned long ) (res+KB)));
+    access(ketag_addr_cal((unsigned long ) (res+6*KB)));
     
     return 0;
 }

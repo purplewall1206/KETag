@@ -957,7 +957,6 @@ deps_/home/ppw/KETag/p2test/p2test.o := \
     $(wildcard include/config/slab.h) \
     $(wildcard include/config/slub.h) \
     $(wildcard include/config/slob.h) \
-  include/linux/ketag.h \
   include/linux/kasan.h \
     $(wildcard include/config/kasan/generic.h) \
     $(wildcard include/config/kasan/inline.h) \
@@ -1046,6 +1045,7 @@ deps_/home/ppw/KETag/p2test/p2test.o := \
   arch/x86/include/asm/hugetlb.h \
   include/asm-generic/hugetlb.h \
     $(wildcard include/config/arch/has/gigantic/page.h) \
+  include/linux/ketag.h \
 
 /home/ppw/KETag/p2test/p2test.o: $(deps_/home/ppw/KETag/p2test/p2test.o)
 
