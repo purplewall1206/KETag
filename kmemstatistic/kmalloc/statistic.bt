@@ -1,0 +1,7 @@
+#include <linux/gfp.h>
+#include <linux/slab.h>
+
+tracepoint:kmem:kmalloc 
+{
+
+}

@@ -18,7 +18,7 @@
 
 // #define TB                  (unsigned long)(1) << 40
 
-#define MODULE_NAME "p2test"
+#define MODULE_NAME "p3test"
 MODULE_AUTHOR("ppw");
 MODULE_LICENSE("GPL v2");
 unsigned long getvCR3(int pid) 
@@ -157,8 +157,9 @@ static int __init hello_init(void)
     // int i;   
     // unsigned long addr = 0xfffffffffffffff0;
     // unsigned long ketagbase = 0xffffb88000000000;
-    unsigned long testaddr = 0xffffb88000000000 + 100*MB + 10 * KB + 100;
-    unsigned long *value = (unsigned long*) testaddr;
+    // unsigned long testaddr = 0xffffb88000000000 + 100*MB + 10 * KB + 100;
+    // unsigned long *value = (unsigned long*) testaddr;
+    // *value = 0x1234567890abcdef;
     // unsigned long ptefault =  0xffffb88000001000;
     // unsigned long pmdfault =  0xffffb88000200000;
     // unsigned long pudfault =  0xffffb88040000000;
@@ -167,35 +168,12 @@ static int __init hello_init(void)
     // unsigned long ketagtage=  0xffffc19000000000;
     pr_info("%s init\n", MODULE_NAME); 
 
-    // void (*target)(unsigned long );
-    // target = (void *)0xffffffff812a8b09;
-    // (*target)(addr);
-    // traversePGD();
-    // for (i = 0;i < 32;i++)
-    //     pr_info("%lx\n", ketag_base + TB*i);
-    
-    // for (i = 0;i < 4096/8+1;i++) {
-    //     pr_info("%lx  :  %lx\n", (unsigned long)&value[i], (unsigned long)value[i]);
-    // }
-    // alloc_ketag_startpage(ketagbase);
-    // checkstruct(ketagbase);
-    // ketag_alloc_addr_one(testaddr);
-    ketag_alloc_addr(testaddr, MB);
-    // *value = 0x1234567890abcdef;
-    // ketag_free_addr_one(testaddr);
-    checkptestruct(testaddr);
-    
-    // checkstruct(testaddr);
-    // int res = ketag_free_addr_one(testaddr);
-    // pr_info("res %d\n", res);
-    access(testaddr+KB*9+100);
-    // ketag_free_addr_one(testaddr);
+    void* res = ketag_vmalloc(64*KB, (char)(0b10010110));
+    pr_info("ketag_vamlloc : %016lx\n", (unsigned long)res);
+    access(ketag_addr_cal((unsigned long ) res));
+    access(ketag_addr_cal((unsigned long ) (res+KB)));
+    access(ketag_addr_cal((unsigned long ) (res+6*KB)));
 
-    access(testaddr);
-    access(testaddr+4);
-    // unsigned long pa_to_va = 0xffff888042987000;
-    // access(pa_to_va);
-    // access(testaddr+GB*2);
     
     return 0;
 }
