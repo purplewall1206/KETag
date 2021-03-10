@@ -106,6 +106,7 @@ void checkstruct(unsigned long addr)
         pr_info("alloc pmd done\n");
     } else {
         pr_err("pmd not present\n");
+        return;
     }
 
     pte = pte_offset_kernel(pmd, addr);
@@ -157,6 +158,7 @@ static int __init hello_init(void)
     // int i;   
     // unsigned long addr = 0xfffffffffffffff0;
     // unsigned long ketagbase = 0xffffb88000000000;
+    unsigned long ketag_stack;
     unsigned long testaddr = 0xffffb88000000000 + 100*MB + 10 * KB + 100;
     unsigned long len = 1000;
     unsigned long *value = (unsigned long*) testaddr;
@@ -169,11 +171,11 @@ static int __init hello_init(void)
     pr_info("%s init  GFP_KERNEL %u\n", MODULE_NAME, GFP_KERNEL); 
 
 
-    void* ret = ketag_kmalloc(len, GFP_KERNEL, (char)0b11000011);
+    // void* ret = ketag_kmalloc(len, GFP_KERNEL, (char)0b11000011);
     // void* ret = __kmalloc(sizeof(char)*512, GFP_KERNEL);
     // void* ret = kmalloc(sizeof(char)*512, GFP_KERNEL);
     // void* ret = (void*) 0xffff888200433a00;
-    unsigned long tagaddr = ketag_addr_cal((unsigned long)ret);
+    // unsigned long tagaddr = ketag_addr_cal((unsigned long)ret);
     // if (!ketag_is_pte_present(tagaddr)) {
     //     ketag_alloc_addr(tagaddr, 64);
     //     pr_info("not present\n");
@@ -182,34 +184,46 @@ static int __init hello_init(void)
     // }
     // ketag_set_value(tagaddr, 64, (char)0b11001111);
 
-    pr_info("p2test-- ketag_kmalloc : %016lx  %016lx   %u\n", (unsigned long)ret, tagaddr,100 );
-    checkptestruct(tagaddr);
+    // pr_info("p2test-- ketag_kmalloc : %016lx  %016lx   %u\n", (unsigned long)ret, tagaddr,100 );
+    // checkptestruct(tagaddr);
 
     // access(ketag_addr_cal((unsigned long)0xffffffff81000000));
     // access(ketag_addr_cal((unsigned long)0xffffffff81000000)+KB);
     // access(ketag_addr_cal((unsigned long)0xffffffff81000000)+ KB*2);
 
-    access(tagaddr);
-    access(tagaddr+10);
-    access(tagaddr+16);
-    ketag_kfree(ret);
-    checkptestruct(tagaddr);
-    access(tagaddr);
-    access(tagaddr+10);
-    access(tagaddr+16);
+    // access(tagaddr);
+    // access(tagaddr+10);
+    // access(tagaddr+16);
+    // ketag_kfree(ret);
+    // checkptestruct(tagaddr);
+    // access(tagaddr);
+    // access(tagaddr+10);
+    // access(tagaddr+16);
 
-    ret = kmalloc(len, GFP_KERNEL);
-    tagaddr = ketag_addr_cal((unsigned long)ret);
-    pr_info("p2test-- kmalloc : %016lx  %016lx   %u\n", (unsigned long)ret, tagaddr,100 );
-    checkptestruct(tagaddr);
-    access(tagaddr);
-    access(tagaddr+10);
-    access(tagaddr+16);
-    kfree(ret);
-    checkptestruct(tagaddr);
-    access(tagaddr);
-    access(tagaddr+10);
-    access(tagaddr+16);
+    // ret = kmalloc(len, GFP_KERNEL);
+    // tagaddr = ketag_addr_cal((unsigned long)ret);
+    // pr_info("p2test-- kmalloc : %016lx  %016lx   %u\n", (unsigned long)ret, tagaddr,100 );
+    // checkptestruct(tagaddr);
+    // access(tagaddr);
+    // access(tagaddr+10);
+    // access(tagaddr+16);
+    // kfree(ret);
+    // checkptestruct(tagaddr);
+    // access(tagaddr);
+    // access(tagaddr+10);
+    // access(tagaddr+16);
+
+    ketag_stack = ketag_addr_cal((unsigned long) current->stack);
+    pr_info("ketag_stack: tag:%016lx\n", ketag_stack);
+    ketag_set_stack(ketag_addr_cal((unsigned long) current->stack));
+    checkstruct(ketag_stack); 
+    access(ketag_stack);
+
+    access(ketag_addr_cal((unsigned long) 0xffffffff81000000));
+    access(ketag_addr_cal((unsigned long) 0xffffffff81000000) + 10);
+    access(ketag_addr_cal((unsigned long) 0xffffffff82600000));
+    access(ketag_addr_cal((unsigned long) 0xffffffff82600000) + 100);
+   
     // pr_info("%016lx\n", *(unsigned long*)tagaddr);
     // void (*target)(unsigned long );
     // target = (void *)0xffffffff812a8b09;
