@@ -180,6 +180,12 @@ static int __init hello_init(void)
     access(ketag_addr_cal((unsigned long ) (res+KB)));
     access(ketag_addr_cal((unsigned long ) (res+6*KB)));
     
+    ketag_set_stack(ketag_addr_cal((unsigned long) current->stack));
+    // ketag_stack_entry(0b11111111);
+    access(ketag_addr_cal((unsigned long) current->stack));
+// #define ketag_stack_entry(x)  ketag_set_value(ketag_addr_cal(keteg_get_rbp()), 2, x)
+// #define ketag_stack_exit(x)   ketag_set_value(ketag_addr_cal(ketag_get_rbp()), 2, 0b00000000)
+
     return 0;
 }
 

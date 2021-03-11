@@ -223,6 +223,16 @@ static int __init hello_init(void)
     access(ketag_addr_cal((unsigned long) 0xffffffff81000000) + 10);
     access(ketag_addr_cal((unsigned long) 0xffffffff82600000));
     access(ketag_addr_cal((unsigned long) 0xffffffff82600000) + 100);
+
+    ketag_set_stack(ketag_addr_cal((unsigned long) current->stack));
+    // ketag_stack_entry(0b11111111);
+    access(ketag_addr_cal((unsigned long) current->stack));
+    ketag_stack_entry(0b11111111);
+    access(ketag_addr_cal(ketag_get_rbp()));
+    ketag_stack_exit();
+    access(ketag_addr_cal(ketag_get_rbp()));
+// #define ketag_stack_entry(x)  ketag_set_value(ketag_addr_cal(keteg_get_rbp()), 2, x)
+// #define ketag_stack_exit(x)   ketag_set_value(ketag_addr_cal(ketag_get_rbp()), 2, 0b00000000)
    
     // pr_info("%016lx\n", *(unsigned long*)tagaddr);
     // void (*target)(unsigned long );
