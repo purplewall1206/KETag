@@ -231,6 +231,9 @@ static int __init hello_init(void)
     access(ketag_addr_cal(ketag_get_rbp()));
     ketag_stack_exit();
     access(ketag_addr_cal(ketag_get_rbp()));
+    unsigned long rbp = 0x0;
+    asm("movq %%rbp, %0\n\t":"=r"(rbp));
+    pr_info("get rbp \n%016lx\n%016lx\n%d\n", rbp, ketag_get_rbp(), (rbp == ketag_get_rbp()));
 // #define ketag_stack_entry(x)  ketag_set_value(ketag_addr_cal(keteg_get_rbp()), 2, x)
 // #define ketag_stack_exit(x)   ketag_set_value(ketag_addr_cal(ketag_get_rbp()), 2, 0b00000000)
    
