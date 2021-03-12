@@ -158,10 +158,10 @@ static int __init hello_init(void)
     // int i;   
     // unsigned long addr = 0xfffffffffffffff0;
     // unsigned long ketagbase = 0xffffb88000000000;
-    unsigned long ketag_stack;
-    unsigned long testaddr = 0xffffb88000000000 + 100*MB + 10 * KB + 100;
-    unsigned long len = 1000;
-    unsigned long *value = (unsigned long*) testaddr;
+    // unsigned long ketag_stack;
+    // unsigned long testaddr = 0xffffb88000000000 + 100*MB + 10 * KB + 100;
+    // unsigned long len = 1000;
+    // unsigned long *value = (unsigned long*) testaddr;
     // unsigned long ptefault =  0xffffb88000001000;
     // unsigned long pmdfault =  0xffffb88000200000;
     // unsigned long pudfault =  0xffffb88040000000;
@@ -213,27 +213,27 @@ static int __init hello_init(void)
     // access(tagaddr+10);
     // access(tagaddr+16);
 
-    ketag_stack = ketag_addr_cal((unsigned long) current->stack);
-    pr_info("ketag_stack: tag:%016lx\n", ketag_stack);
-    ketag_set_stack(ketag_addr_cal((unsigned long) current->stack));
-    checkstruct(ketag_stack); 
-    access(ketag_stack);
+    // ketag_stack = ketag_addr_cal((unsigned long) current->stack);
+    // pr_info("ketag_stack: tag:%016lx\n", ketag_stack);
+    // ketag_set_stack(ketag_addr_cal((unsigned long) current->stack));
+    // checkstruct(ketag_stack); 
+    // access(ketag_stack);
 
-    access(ketag_addr_cal((unsigned long) 0xffffffff81000000));
-    access(ketag_addr_cal((unsigned long) 0xffffffff81000000) + 10);
-    access(ketag_addr_cal((unsigned long) 0xffffffff82600000));
-    access(ketag_addr_cal((unsigned long) 0xffffffff82600000) + 100);
+    // access(ketag_addr_cal((unsigned long) 0xffffffff81000000));
+    // access(ketag_addr_cal((unsigned long) 0xffffffff81000000) + 10);
+    // access(ketag_addr_cal((unsigned long) 0xffffffff82600000));
+    // access(ketag_addr_cal((unsigned long) 0xffffffff82600000) + 100);
 
-    ketag_set_stack(ketag_addr_cal((unsigned long) current->stack));
+    // ketag_set_stack(ketag_addr_cal((unsigned long) current->stack));
+    // // ketag_stack_entry(0b11111111);
+    // access(ketag_addr_cal((unsigned long) current->stack));
     // ketag_stack_entry(0b11111111);
-    access(ketag_addr_cal((unsigned long) current->stack));
-    ketag_stack_entry(0b11111111);
-    access(ketag_addr_cal(ketag_get_rbp()));
-    ketag_stack_exit();
-    access(ketag_addr_cal(ketag_get_rbp()));
-    unsigned long rbp = 0x0;
-    asm("movq %%rbp, %0\n\t":"=r"(rbp));
-    pr_info("get rbp \n%016lx\n%016lx\n%d\n", rbp, ketag_get_rbp(), (rbp == ketag_get_rbp()));
+    // access(ketag_addr_cal(ketag_get_rbp()));
+    // ketag_stack_exit();
+    // access(ketag_addr_cal(ketag_get_rbp()));
+    // unsigned long rbp = 0x0;
+    // asm("movq %%rbp, %0\n\t":"=r"(rbp));
+    // pr_info("get rbp \n%016lx\n%016lx\n%d\n", rbp, ketag_get_rbp(), (rbp == ketag_get_rbp()));
 // #define ketag_stack_entry(x)  ketag_set_value(ketag_addr_cal(keteg_get_rbp()), 2, x)
 // #define ketag_stack_exit(x)   ketag_set_value(ketag_addr_cal(ketag_get_rbp()), 2, 0b00000000)
    
@@ -268,7 +268,31 @@ static int __init hello_init(void)
     // unsigned long pa_to_va = 0xffff888042987000;
     // access(pa_to_va);
     // access(testaddr+GB*2);
+
+    __ketag_entry_gate__((char)0b10010110);
+    pr_info("%016lx  %016lx\n", (unsigned long)current->stack, 
+                ketag_addr_cal((unsigned long) current->stack) );
+    access(ketag_addr_cal(ketag_get_rbp()));
+    pr_info("ketag check %d\n",ketag_check(ketag_get_rbp(), (char) 0b10010110) );
+    if (!ketag_check(ketag_get_rbp(), (char) 0b10010110)   ) {
+        pr_info("cannot access\n");
+    } else {
+        pr_info("we can access\n");
+    }
     
+    ketag_stack_exit();
+    access(ketag_addr_cal(ketag_get_rbp()));
+    if (!ketag_check(ketag_get_rbp(), (char) 0b10010110)   ) {
+        pr_info("cannot access\n");
+    } else {
+        pr_info("we can access\n");
+    }
+    __ketag_exit_gate__;
+    checkptestruct(ketag_addr_cal((unsigned long) current->stack));
+    access(ketag_addr_cal(ketag_get_rbp()));
+
+    // pr_info("ketag check %d\n",ketag_check(ketag_get_rbp(), (char) 0b10010110) );
+
     return 0;
 }
 

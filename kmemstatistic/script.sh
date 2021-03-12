@@ -32,6 +32,24 @@ sudo bpftrace -l | grep execve
     # kprobe:__ia32_sys_execveat
     # kprobe:__x64_sys_execveat
 
-sudo bpftrace -e 'tracepoint:syscalls:sys_enter_vfork { printf("fork trigger PID %d\n", pid); }  tracepoint:syscalls:sys_enter_fork { printf("fork trigger PID %d\n", pid); }   tracepoint:syscalls:sys_enter_execve { printf ("PID %d, filename: %s\n", pid, str(args->filename)); } '
+sudo bpftrace -e 'tracepoint:syscalls:sys_enter_vfork 
+        { printf("fork trigger PID %d\n", pid); } 
+         tracepoint:syscalls:sys_enter_fork { 
+         printf("fork trigger PID %d\n", pid); } 
+           tracepoint:syscalls:sys_enter_execve
+            { printf ("PID %d, filename: %s\n", pid, str(args->filename)); } '
 
 
+sudo bpftrace -e 'tracepoint:syscalls:sys_enter_execve
+                { printf ("sys_enter_execve PID %d \n", pid); }
+                tracepoint:syscalls:sys_enter_close 
+                { printf ("sys_enter_close PID %d\n", pid); }
+                tracepoint:syscalls:sys_enter_exit_group
+                { printf ("sys_enter_exit_group PID %d\n",
+                 pid); }'
+
+sudo bpftrace -e 'tracepoint:syscalls:sys_enter_execve
+                { printf ("sys_enter_execve PID %d \n", pid); }
+                tracepoint:syscalls:sys_enter_exit_group
+                { printf ("sys_enter_exit_group PID %d\n",
+                 pid); }'
