@@ -1,0 +1,1 @@
+cmd_/home/ppw/KETag/stacktest/stacktest.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 --build-id=sha1  -T ./scripts/module-common.lds -o /home/ppw/KETag/stacktest/stacktest.ko /home/ppw/KETag/stacktest/stacktest.o /home/ppw/KETag/stacktest/stacktest.mod.o;  true
