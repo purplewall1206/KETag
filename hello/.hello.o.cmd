@@ -1,8 +1,8 @@
-cmd_/home/ppw/KETag/p2test/p2test.o := gcc -Wp,-MMD,/home/ppw/KETag/p2test/.p2test.o.d -nostdinc -isystem /usr/lib/gcc/x86_64-linux-gnu/10/include -I./arch/x86/include -I./arch/x86/include/generated  -I./include -I./arch/x86/include/uapi -I./arch/x86/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -include ./include/linux/compiler_types.h -D__KERNEL__ -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -Werror=implicit-function-declaration -Werror=implicit-int -Wno-format-security -std=gnu89 -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -DCONFIG_X86_X32_ABI -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -fno-jump-tables -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-address-of-packed-member -O2 -fno-allow-store-data-races -Wframe-larger-than=1024 -fstack-protector-strong -Wno-unused-but-set-variable -Wimplicit-fallthrough -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -g -gdwarf-4 -pg -mrecord-mcount -mfentry -DCC_USING_FENTRY -flive-patching=inline-clone -Wdeclaration-after-statement -Wvla -Wno-pointer-sign -Wno-stringop-truncation -Wno-zero-length-bounds -Wno-array-bounds -Wno-stringop-overflow -Wno-restrict -Wno-maybe-uninitialized -fno-strict-overflow -fno-merge-all-constants -fmerge-constants -fno-stack-check -fconserve-stack -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -fmacro-prefix-map=./= -fcf-protection=none -Wno-packed-not-aligned  -DMODULE  -DKBUILD_BASENAME='"p2test"' -DKBUILD_MODNAME='"p2test"' -c -o /home/ppw/KETag/p2test/p2test.o /home/ppw/KETag/p2test/p2test.c
+cmd_/home/ppw/KETag/hello/hello.o := clang -Wp,-MMD,/home/ppw/KETag/hello/.hello.o.d -nostdinc -isystem /home/ppw/llvm/llvm-project/install/lib/clang/13.0.0/include -I./arch/x86/include -I./arch/x86/include/generated  -I./include -I./arch/x86/include/uapi -I./arch/x86/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -include ./include/linux/compiler_types.h -D__KERNEL__ -Qunused-arguments -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -Werror=implicit-function-declaration -Werror=implicit-int -Wno-format-security -std=gnu89 -no-integrated-as -Werror=unknown-warning-option -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -m64 -mno-80387 -mstack-alignment=8 -mtune=generic -mno-red-zone -mcmodel=kernel -DCONFIG_X86_X32_ABI -Wno-sign-compare -fno-asynchronous-unwind-tables -mretpoline-external-thunk -fno-delete-null-pointer-checks -Wno-frame-address -Wno-address-of-packed-member -O2 -Wframe-larger-than=1024 -fstack-protector-strong -Wno-format-invalid-specifier -Wno-gnu -mno-global-merge -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -g -gdwarf-4 -pg -mfentry -DCC_USING_FENTRY -Wdeclaration-after-statement -Wvla -Wno-pointer-sign -Wno-array-bounds -fno-strict-overflow -fno-merge-all-constants -fno-stack-check -Werror=date-time -Werror=incompatible-pointer-types -fmacro-prefix-map=./= -fcf-protection=none -Wno-initializer-overrides -Wno-format -Wno-sign-compare -Wno-format-zero-length -Wno-pointer-to-enum-cast -Wno-tautological-constant-out-of-range-compare  -DMODULE  -DKBUILD_BASENAME='"hello"' -DKBUILD_MODNAME='"hello"' -c -o /home/ppw/KETag/hello/hello.o /home/ppw/KETag/hello/hello.c
 
-source_/home/ppw/KETag/p2test/p2test.o := /home/ppw/KETag/p2test/p2test.c
+source_/home/ppw/KETag/hello/hello.o := /home/ppw/KETag/hello/hello.c
 
-deps_/home/ppw/KETag/p2test/p2test.o := \
+deps_/home/ppw/KETag/hello/hello.o := \
   include/linux/kconfig.h \
     $(wildcard include/config/cc/version/text.h) \
     $(wildcard include/config/cpu/big/endian.h) \
@@ -13,9 +13,7 @@ deps_/home/ppw/KETag/p2test/p2test.o := \
     $(wildcard include/config/enable/must/check.h) \
     $(wildcard include/config/cc/has/asm/inline.h) \
   include/linux/compiler_attributes.h \
-  include/linux/compiler-gcc.h \
-    $(wildcard include/config/retpoline.h) \
-    $(wildcard include/config/arch/use/builtin/bswap.h) \
+  include/linux/compiler-clang.h \
   include/linux/mm.h \
     $(wildcard include/config/need/multiple/nodes.h) \
     $(wildcard include/config/sysctl.h) \
@@ -83,7 +81,6 @@ deps_/home/ppw/KETag/p2test/p2test.o := \
     $(wildcard include/config/profile/all/branches.h) \
     $(wildcard include/config/stack/validation.h) \
     $(wildcard include/config/debug/entry.h) \
-  include/linux/compiler_types.h \
   arch/x86/include/asm/barrier.h \
   arch/x86/include/asm/alternative.h \
   include/linux/types.h \
@@ -350,6 +347,7 @@ deps_/home/ppw/KETag/p2test/p2test.o := \
   arch/x86/include/asm/pgtable_64_types.h \
   arch/x86/include/asm/sparsemem.h \
   arch/x86/include/asm/nospec-branch.h \
+    $(wildcard include/config/retpoline.h) \
   include/linux/static_key.h \
   include/linux/frame.h \
   arch/x86/include/asm/alternative-asm.h \
@@ -362,7 +360,6 @@ deps_/home/ppw/KETag/p2test/p2test.o := \
   arch/x86/include/uapi/asm/sigcontext.h \
   arch/x86/include/asm/msr.h \
     $(wildcard include/config/tracepoints.h) \
-  arch/x86/include/asm/msr-index.h \
   arch/x86/include/asm/cpumask.h \
   include/linux/cpumask.h \
     $(wildcard include/config/cpumask/offstack.h) \
@@ -816,7 +813,6 @@ deps_/home/ppw/KETag/p2test/p2test.o := \
   include/linux/radix-tree.h \
   include/linux/xarray.h \
     $(wildcard include/config/xarray/multi.h) \
-  include/linux/kconfig.h \
   include/linux/local_lock.h \
   include/linux/local_lock_internal.h \
   include/linux/capability.h \
@@ -926,7 +922,6 @@ deps_/home/ppw/KETag/p2test/p2test.o := \
     $(wildcard include/config/have/mod/arch/specific.h) \
     $(wildcard include/config/modules/use/elf/rel.h) \
     $(wildcard include/config/modules/use/elf/rela.h) \
-  arch/x86/include/asm/orc_types.h \
   arch/x86/include/asm/io.h \
     $(wildcard include/config/mtrr.h) \
     $(wildcard include/config/x86/pat.h) \
@@ -1046,6 +1041,6 @@ deps_/home/ppw/KETag/p2test/p2test.o := \
   include/asm-generic/hugetlb.h \
     $(wildcard include/config/arch/has/gigantic/page.h) \
 
-/home/ppw/KETag/p2test/p2test.o: $(deps_/home/ppw/KETag/p2test/p2test.o)
+/home/ppw/KETag/hello/hello.o: $(deps_/home/ppw/KETag/hello/hello.o)
 
-$(deps_/home/ppw/KETag/p2test/p2test.o):
+$(deps_/home/ppw/KETag/hello/hello.o):
