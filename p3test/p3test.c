@@ -14,7 +14,7 @@
 #include <asm/pgtable.h>
 #include <linux/string.h>
 
-#include <linux/ketag.h>
+// #include <linux/ketag.h>
 
 // #define TB                  (unsigned long)(1) << 40
 
@@ -154,37 +154,13 @@ void checkptestruct(unsigned long addr)
 
 static int __init hello_init(void)
 {
-    // int i;   
-    // unsigned long addr = 0xfffffffffffffff0;
-    // unsigned long ketagbase = 0xffffb88000000000;
-    // unsigned long testaddr = 0xffffb88000000000 + 100*MB + 10 * KB + 100;
-    // unsigned long *value = (unsigned long*) testaddr;
-    // *value = 0x1234567890abcdef;
-    // unsigned long ptefault =  0xffffb88000001000;
-    // unsigned long pmdfault =  0xffffb88000200000;
-    // unsigned long pudfault =  0xffffb88040000000;
-    // unsigned long pgdfault =  0xffffb90000000000;
-    // unsigned long ketagtag =  0xffffbf9000000000;
-    // unsigned long ketagtage=  0xffffc19000000000;
-    pr_info("%s init\n", MODULE_NAME); 
+    unsigned long target;
+    // target = 0xffffbf9000000000;
+    // target = 0xffffffff81000000;
+    target = 0xffffb880000f0000;
 
-    void* res = ketag_vmalloc(64*KB, (char)(0b00000000));
-    // void* res = (void*) 0xffffc90000821000;
-    
-    pr_info("ketag_vamlloc : %016lx\n", (unsigned long)res);
-    access(ketag_addr_cal((unsigned long ) res));
-    access(ketag_addr_cal((unsigned long ) (res+KB)));
-    access(ketag_addr_cal((unsigned long ) (res+6*KB)));
-    ketag_vfree(res);
-    access(ketag_addr_cal((unsigned long ) res));
-    access(ketag_addr_cal((unsigned long ) (res+KB)));
-    access(ketag_addr_cal((unsigned long ) (res+6*KB)));
-    
-    ketag_set_stack(ketag_addr_cal((unsigned long) current->stack));
-    // ketag_stack_entry(0b11111111);
-    access(ketag_addr_cal((unsigned long) current->stack));
-// #define ketag_stack_entry(x)  ketag_set_value(ketag_addr_cal(keteg_get_rbp()), 2, x)
-// #define ketag_stack_exit(x)   ketag_set_value(ketag_addr_cal(ketag_get_rbp()), 2, 0b00000000)
+    access(target + 16);
+    access(target + 160);
 
     return 0;
 }

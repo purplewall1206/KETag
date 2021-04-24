@@ -29,9 +29,9 @@ static int __init stacktest_init(void)
     pr_info("stack : %016lx\n", (unsigned long )current->stack);
     pr_info("a: %d  %016lx\n", a, (unsigned long)&a);
     pr_info("b: %d  %016lx\n", b, (unsigned long)&b);
-    pr_info("distance: %016lx  %016lx\n", (unsigned long)&a-(unsigned long )current->stack,
-            (unsigned long)&b- (unsigned long )current->stack);
-    pr_info("user space : %016lx\n", value[0]);
+    // pr_info("distance: %016lx  %016lx\n", (unsigned long)&a-(unsigned long )current->stack,
+    //         (unsigned long)&b- (unsigned long )current->stack);
+    // pr_info("user space : %016lx\n", value[0]);
     return 0;
 }
 
