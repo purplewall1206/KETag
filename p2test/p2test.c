@@ -170,14 +170,16 @@ static int __init hello_init(void)
     // unsigned long ketagtage=  0xffffc19000000000;
     pr_info("%s init  GFP_KERNEL %u\n", MODULE_NAME, GFP_KERNEL); 
 
-    unsigned long overflow = 0xffffffffffffffff;
-    pr_info("%d\n", overflow);
-    overflow = overflow++;
-    pr_info("%d\n", overflow/0);
+    // unsigned long overflow = 0xffffffffffffffff;
+    // pr_info("%d\n", overflow);
+    // overflow = overflow++;
+    // pr_info("%d\n", overflow/0);
 
     // void* ret = ketag_kmalloc(len, GFP_KERNEL, (char)0b11000011);
     // void* ret = __kmalloc(sizeof(char)*512, GFP_KERNEL);
-    // void* ret = kmalloc(sizeof(char)*512, GFP_KERNEL);
+    void* ret = kmalloc(sizeof(char)*512, GFP_KERNEL);
+    int x = 100;
+    ret = kmalloc(x, GFP_KERNEL);
     // void* ret = (void*) 0xffff888200433a00;
     // unsigned long tagaddr = ketag_addr_cal((unsigned long)ret);
     // if (!ketag_is_pte_present(tagaddr)) {

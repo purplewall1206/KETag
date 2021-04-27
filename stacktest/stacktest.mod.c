@@ -29,12 +29,10 @@ __used __section("__versions") = {
 	{ 0x95d78218, "__stack_chk_fail" },
 	{ 0xcb50b182, "current_task" },
 	{ 0xc5850110, "printk" },
-	{ 0x7cd8d75e, "page_offset_base" },
-	{ 0x97651e6c, "vmemmap_base" },
 	{ 0xbdfb6dbb, "__fentry__" },
 };
 
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "2B68F38E21C8D638DCA20DF");
+MODULE_INFO(srcversion, "D0A8CB4079EC0E3B7453D86");
