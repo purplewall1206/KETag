@@ -1,0 +1,1 @@
+cmd_/home/ppw/KETag/readkernelpt/Module.symvers := sed 's/ko$$/o/' /home/ppw/KETag/readkernelpt/modules.order | scripts/mod/modpost -m -a   -o /home/ppw/KETag/readkernelpt/Module.symvers -e -i Module.symvers   -T -

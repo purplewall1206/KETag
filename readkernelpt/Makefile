@@ -1,4 +1,4 @@
-obj-m += crashunload.o
+obj-m += readkernelpt.o
 CFLAGS = -Wall -g -std=c99
 # Set the path to the Kernel build utils.
 KBUILD=/lib/modules/$(shell uname -r)/build/
@@ -15,15 +15,11 @@ menuconfig:
 	$(MAKE) -C $(KBUILD) M=$(PWD) menuconfig
 
 ins:
-	# sudo dmesg -C
-	sudo insmod crashunload.ko
-	sudo rmmod crashunload
+	sudo dmesg -C
+	sudo insmod readkernelpt.ko
 	sudo rmmod readkernelpt
-	# sudo rmmod p2test
-	# sudo dmesg
+	sudo dmesg
 
 .PHNOY:
 	modules
 	ins
-
-	# 0xffffffff8260aff0 <init_top_pgt+4080>: 0x0000000000000000      0x000000000260f067

@@ -26,14 +26,18 @@ MODULE_INFO(retpoline, "Y");
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
 	{ 0xc5de686c, "module_layout" },
-	{ 0x837b7b09, "__dynamic_pr_debug" },
-	{ 0xe2d5255a, "strcmp" },
-	{ 0x790c2da7, "get_sym_modules" },
+	{ 0xdad13544, "ptrs_per_p4d" },
+	{ 0x7cd8d75e, "page_offset_base" },
+	{ 0x3d3ed877, "pv_ops" },
+	{ 0x8a35b432, "sme_me_mask" },
+	{ 0x1d19f77b, "physical_mask" },
 	{ 0xc5850110, "printk" },
+	{ 0x5367b4b4, "boot_cpu_data" },
+	{ 0x72d79d83, "pgdir_shift" },
 	{ 0xbdfb6dbb, "__fentry__" },
 };
 
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "A1C2C71B6E15FBD7ED5D08F");
+MODULE_INFO(srcversion, "53CAF610AB539F020DAFEE9");

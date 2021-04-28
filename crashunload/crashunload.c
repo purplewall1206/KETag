@@ -21,7 +21,7 @@
 MODULE_AUTHOR("ppw");
 MODULE_LICENSE("GPL v2");
 
-char crashname[] = "p2test";
+char crashname[] = "readkernelpt";
 
 static int __init crashunload_init(void)
 {
