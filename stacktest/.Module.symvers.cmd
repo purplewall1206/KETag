@@ -1,1 +1,1 @@
-cmd_/home/ppw/KETag/stacktest/Module.symvers := sed 's/ko$$/o/' /home/ppw/KETag/stacktest/modules.order | scripts/mod/modpost -m -a   -o /home/ppw/KETag/stacktest/Module.symvers -e -i Module.symvers   -T -
+cmd_/home/wangzc/Documents/KETag/stacktest/Module.symvers := sed 's/ko$$/o/' /home/wangzc/Documents/KETag/stacktest/modules.order | scripts/mod/modpost -m -a   -o /home/wangzc/Documents/KETag/stacktest/Module.symvers -e -i Module.symvers  -N -T -

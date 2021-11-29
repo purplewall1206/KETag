@@ -168,8 +168,21 @@ static int __init hello_init(void)
     // unsigned long pgdfault =  0xffffb90000000000;
     // unsigned long ketagtag =  0xffffbf9000000000;
     // unsigned long ketagtage=  0xffffc19000000000;
+    unsigned long addr0 = 0xffffffff81000000;
+    unsigned long addr1 = 0xffff888000000000;
+    // unsigned long addr2 = 0xffff
     pr_info("%s init  GFP_KERNEL %u\n", MODULE_NAME, GFP_KERNEL); 
+    // ketag_set(addr1, KB, 0b11111111);
 
+    // access(ketag_addr_cal(addr0));
+    access(ketag_addr_cal(addr1));
+    access(ketag_addr_cal(addr1 + 10));
+    access(ketag_addr_cal(addr1 + 1000));
+    access(ketag_addr_cal(addr1 + KB));
+    access(ketag_addr_cal(addr1 + KB + 10));
+    // access(ketag_addr_cal(addr1+2*GB));
+    // access(ketag_addr_cal(addr1+4*GB));
+    // access(ketag_addr_cal(addr1+7*GB));
 
     // void* ret = ketag_kmalloc(len, GFP_KERNEL, (char)0b11000011);
     // void* ret = __kmalloc(sizeof(char)*512, GFP_KERNEL);
@@ -269,27 +282,27 @@ static int __init hello_init(void)
     // access(pa_to_va);
     // access(testaddr+GB*2);
 
-    __ketag_entry_gate__((char)0b10010110);
-    pr_info("%016lx  %016lx\n", (unsigned long)current->stack, 
-                ketag_addr_cal((unsigned long) current->stack) );
-    access(ketag_addr_cal(ketag_get_rbp()));
-    pr_info("ketag check %d\n",ketag_check(ketag_get_rbp(), (char) 0b10010110) );
-    if (!ketag_check(ketag_get_rbp(), (char) 0b10010110)   ) {
-        pr_info("cannot access\n");
-    } else {
-        pr_info("we can access\n");
-    }
+    // __ketag_entry_gate__((char)0b10010110);
+    // pr_info("%016lx  %016lx\n", (unsigned long)current->stack, 
+    //             ketag_addr_cal((unsigned long) current->stack) );
+    // access(ketag_addr_cal(ketag_get_rbp()));
+    // pr_info("ketag check %d\n",ketag_check(ketag_get_rbp(), (char) 0b10010110) );
+    // if (!ketag_check(ketag_get_rbp(), (char) 0b10010110)   ) {
+    //     pr_info("cannot access\n");
+    // } else {
+    //     pr_info("we can access\n");
+    // }
     
-    ketag_stack_exit();
-    access(ketag_addr_cal(ketag_get_rbp()));
-    if (!ketag_check(ketag_get_rbp(), (char) 0b10010110)   ) {
-        pr_info("cannot access\n");
-    } else {
-        pr_info("we can access\n");
-    }
-    __ketag_exit_gate__;
-    checkptestruct(ketag_addr_cal((unsigned long) current->stack));
-    access(ketag_addr_cal(ketag_get_rbp()));
+    // ketag_stack_exit();
+    // access(ketag_addr_cal(ketag_get_rbp()));
+    // if (!ketag_check(ketag_get_rbp(), (char) 0b10010110)   ) {
+    //     pr_info("cannot access\n");
+    // } else {
+    //     pr_info("we can access\n");
+    // }
+    // __ketag_exit_gate__;
+    // checkptestruct(ketag_addr_cal((unsigned long) current->stack));
+    // access(ketag_addr_cal(ketag_get_rbp()));
 
     // pr_info("ketag check %d\n",ketag_check(ketag_get_rbp(), (char) 0b10010110) );
 

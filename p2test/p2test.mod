@@ -1,2 +1,2 @@
-/home/ppw/KETag/p2test/p2test.o
+/home/wangzc/Documents/KETag/p2test/p2test.o
 

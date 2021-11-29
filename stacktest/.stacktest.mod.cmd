@@ -1,1 +1,1 @@
-cmd_/home/ppw/KETag/stacktest/stacktest.mod := { echo  /home/ppw/KETag/stacktest/stacktest.o;  echo; } > /home/ppw/KETag/stacktest/stacktest.mod
+cmd_/home/wangzc/Documents/KETag/stacktest/stacktest.mod := { echo  /home/wangzc/Documents/KETag/stacktest/stacktest.o;  echo; } > /home/wangzc/Documents/KETag/stacktest/stacktest.mod

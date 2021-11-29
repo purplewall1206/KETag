@@ -1,2 +1,2 @@
-/home/ppw/KETag/stacktest/stacktest.o
+/home/wangzc/Documents/KETag/stacktest/stacktest.o
 

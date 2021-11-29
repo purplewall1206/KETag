@@ -10,7 +10,7 @@ MODULE_INFO(vermagic, VERMAGIC_STRING);
 MODULE_INFO(name, KBUILD_MODNAME);
 
 __visible struct module __this_module
-__section(.gnu.linkonce.this_module) = {
+__section(".gnu.linkonce.this_module") = {
 	.name = KBUILD_MODNAME,
 	.init = init_module,
 #ifdef CONFIG_MODULE_UNLOAD
@@ -24,15 +24,15 @@ MODULE_INFO(retpoline, "Y");
 #endif
 
 static const struct modversion_info ____versions[]
-__used __section(__versions) = {
-	{ 0x9de7765d, "module_layout" },
-	{ 0xc959d152, "__stack_chk_fail" },
+__used __section("__versions") = {
+	{ 0xe842e1e1, "module_layout" },
+	{ 0x95d78218, "__stack_chk_fail" },
+	{ 0x649b3409, "current_task" },
 	{ 0xc5850110, "printk" },
-	{ 0xebbe12f0, "current_task" },
 	{ 0xbdfb6dbb, "__fentry__" },
 };
 
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "137A46C215202326AA2340E");
+MODULE_INFO(srcversion, "79B60457F3E884E218603CE");
